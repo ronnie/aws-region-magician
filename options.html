@@ -65,7 +65,7 @@
       color: var(--text);
     }
     .test-links a {
-      display: block;
+      display: inline-block;
       font-size: 0.875rem;
       color: var(--accent);
       text-decoration: none;
@@ -84,6 +84,29 @@
       color: #6ee7b7;
       min-height: 1.25rem;
     }
+    .info-tooltip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.1em;
+      height: 1.1em;
+      margin-left: 0.2rem;
+      font-size: 0.85em;
+      font-style: italic;
+      font-weight: 600;
+      color: #9ca3af;
+      border: 1px solid #9ca3af;
+      border-radius: 50%;
+      cursor: help;
+    }
+    .info-tooltip:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .checkbox-row label {
+      cursor: pointer;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -95,14 +118,15 @@
   <select id="regionGov"></select>
   <label for="regionCn" style="margin-top: 1rem;">Preferred AWS China Region</label>
   <select id="regionCn"></select>
-  <label class="checkbox-label" style="margin-top: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+  <div class="checkbox-row" style="margin-top: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
     <input type="checkbox" id="pauseRedirects" />
-    <span>Pause redirects</span>
-  </label>
-  <label class="checkbox-label" style="margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+    <label for="pauseRedirects">Pause redirects</label>
+  </div>
+  <div class="checkbox-row" style="margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
     <input type="checkbox" id="debugLogging" />
-    <span>Debug mode</span>
-  </label>
+    <label for="debugLogging">Debug mode</label>
+    <span class="info-tooltip" title="Debug logs appear in the extension's service worker console: open chrome://extensions, find this extension, then click &quot;service worker&quot;." aria-label="Info">i</span>
+  </div>
   <div class="test-links">
     <p>Console Links</p>
     <ul>

@@ -140,6 +140,13 @@ async function applyRules() {
 applyRules();
 updateActionTitle();
 
+// So the user sees something when they open the service worker console with debug on
+isDebugLoggingEnabled().then((enabled) => {
+  if (enabled) {
+    console.log('[AWS Region Magician] Debug mode is on. Rule updates and redirect matches will be logged here.');
+  }
+});
+
 // Debug: log when a redirect rule actually matches a request (unpacked extensions only; requires declarativeNetRequestFeedback).
 chrome.declarativeNetRequest.onRuleMatchedDebug?.addListener(async (info) => {
   if (!(await isDebugLoggingEnabled())) return;
@@ -157,7 +164,12 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
-  if (areaName === 'sync' && (changes[STORAGE_KEY] || changes[STORAGE_KEY_GOV] || changes[STORAGE_KEY_CN] || changes[REDIRECTS_PAUSED_KEY])) {
+  if (areaName !== 'sync') return;
+  if (changes[DEBUG_LOGGING_KEY]) {
+    const on = !!changes[DEBUG_LOGGING_KEY].newValue;
+    console.log('[AWS Region Magician] Debug logging', on ? 'enabled. Rule updates and redirect matches will appear in this console.' : 'disabled.');
+  }
+  if (changes[STORAGE_KEY] || changes[STORAGE_KEY_GOV] || changes[STORAGE_KEY_CN] || changes[REDIRECTS_PAUSED_KEY]) {
     applyRules();
     if (changes[STORAGE_KEY] || changes[STORAGE_KEY_GOV]) updateActionTitle();
   }

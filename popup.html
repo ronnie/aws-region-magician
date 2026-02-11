@@ -28,16 +28,16 @@
     .row:last-of-type {
       margin-bottom: 0;
     }
-    label {
+    .row label {
       font-size: 0.875rem;
       cursor: pointer;
-      flex: 1;
+      flex-shrink: 0;
     }
     a {
       font-size: 0.875rem;
       color: var(--accent);
       text-decoration: none;
-      display: block;
+      display: inline-block;
       padding: 0.35rem 0;
     }
     a:hover {
@@ -61,11 +61,10 @@
   </style>
 </head>
 <body>
-  <label class="row" for="pauseRedirects">
+  <div class="row">
     <input type="checkbox" id="pauseRedirects" />
-    <span>Pause redirects</span>
-  </label>
-  <a href="#" id="openOptions" aria-label="Open extension options">Open options</a>
+    <label for="pauseRedirects">Pause redirects</label>
+  </div>
   <div class="test-links">
     <p>Console Links</p>
     <ul>
@@ -74,7 +73,8 @@
       <li><a href="https://console.amazonaws.cn/" target="_blank" rel="noopener">AWS China</a></li>
     </ul>
   </div>
-  <script src="_shared.js"></script>
+  <a href="#" id="openOptions" aria-label="Open extension options">Open options</a>
+  <script src="shared.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
